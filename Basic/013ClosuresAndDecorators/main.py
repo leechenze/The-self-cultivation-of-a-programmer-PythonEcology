@@ -86,6 +86,28 @@ print(inner(30))
 # sendMsg2()
 
 
+# 被装饰的函数有可变参数和关键字参数
+# def outer(fn):
+#     def inner(*args, **kwargs):
+#         print("🔐 验证登录中...")
+#         fn(*args, **kwargs)
+#         print("✅ 执行完成")
+#     return inner
+# @outer
+# def pay(*amount,**kwargs):
+#     name = kwargs.get('name', '未知用户')
+#     print(f"用户 {name} 分别支付了 {amount} 元")
+# @outer
+# def comment(title, text):
+#     print(f"发表评论：标题={title},内容={text}")
+#
+# pay(100,200,300,name='anglee')
+# comment(title='评论标题',text='评论文本')
+
+
+
+
+
 # 语法糖装饰器嵌套
 # print('\n')
 # def auto_chain(checkInFn):
@@ -103,5 +125,27 @@ print(inner(30))
 #     checkInFn()
 #
 # login()
+
+
+
+
+
+# 多个装饰器
+def deco1(fn):
+    def inner():
+        return "哈哈哈 - " + fn() + ' - 呵呵呵'
+    return inner
+def deco2(fn):
+    def inner():
+        return "奈斯 - " + fn() + ' - 非常优秀'
+    return inner
+# 被装饰的函数一
+@deco1
+@deco2
+def func1():
+    return "晚上学习Python"
+print(func1())
+
+
 
 
