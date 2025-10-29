@@ -75,7 +75,8 @@
 
 
 # 封装和继承(encapsulation_inheritance)
-    
+# 单例模式和魔法方法(single_pattern_magic_method)
+
 
 
 

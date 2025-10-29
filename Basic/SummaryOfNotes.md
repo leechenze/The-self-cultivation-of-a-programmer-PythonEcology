@@ -632,12 +632,81 @@
                 可以通过实例对象访问, 子类会继承隐藏属性, 可以通过 from xxx import * 导入
                 
         单继承
+            pass 关键字是用来处理缩进而不报错用的, pass就是一个占位符
+            多重继承
+                A/B/C C继承B,B继承A,那么C就拥有A和B的所有属性和方法
+
         方法的重写
+                在子类直接重写即可, 自己类有就会优先用自己类的
+                子类主动重写父类方法(两种方法)
+                    # Father.money(self)
+                    # super(Son, self).money()
+                    # 可以简写为 super().money()
+
         新式类
+            如下三种写法在python3中都是等价的
+                class Person:
+                class Person():
+                class Person(object):
+            object是python中的顶级父类, 所有的类都继承自object类
+            
         多继承
+            当多个父类有相同的属性或方法时, 会用就近原则
+                示例
+                    class Son(Father, Mather):
+                        pass
+                    son = Son()
+                    son.money()
+                    son.appearance()
+                如上, 爸爸妈妈都有money方法, son继承Father的, 如果想继承Mather的, 那就 class Son(Mather, Father) 将Mather提前
+                可以通过 Son.__mro__查看同名属性方法的继承优先级
+            
+
         多态
+            多态的前提是继承和方法重写, 即调用同名方法时自动执行各自的实现, 使子类拥有不同的实现
+            python3中类的静态方法要用 @staticmethod 修饰. 用类名和实例对象都可以调用静态方法
+            
+
+        
+    单例模式和魔法方法(single_pattern_magic_method)
+        实例构造器和初始化器(__new__和__init__)
+            __new__方法可以在内存中为对象分配空间, 返回对象的引用
+            __new__方法一定要 return super().__new__(cls), 否则示例的对象将会为None
+            因为__new__就是给对象分配内存空间的, 如果不返回就不会分配所以实例对象会为None
+            __new__是会在__init__之前执行, 当 __new__ 返回的不是该类实例时, __init__ 就不会被调用
+            若 __new__ 返回该类实例, 则继续执行 __init__; 若返回其他对象或 None, 则不会调用 __init__
+            __new__对象创建方法或实例构造器, __init__对象初始化方法或初始化器
+            __new__的cls是类对象, super().__new__(cls)是实例对象
+            
         单例模式
-        静态方法
+            单例模式的核心就是 类实例出来的多个对象必须是同一个.
+                示例
+                    s1 = Singleton()
+                    print('s1: ', s1)
+                    s2 = Singleton()
+                    print('s2: ', s2)
+                比如如上代码 s1 和 s2肯定不会是同一个对象, 但是通过重写__new__实现单例模式, 就可以让 s1 和 s2是同一个内存地址也就是完全的同一个对象
+            通过重写__new__实现单例模式
+                class Singleton(object):
+                    obj = None
+                    def __new__(cls, *args, **kwargs):
+                        print('singleton 的 __new__')
+                        if cls.obj == None:
+                            cls.obj = super().__new__(cls)
+                        return cls.obj
+                    def __init__(self):
+                        print('singleton 的 __init__')
+            还可以通过模块导入实现单例模式
+                因为模块就是天然的单例模式
+                    from pyfile01 from test as test01
+                    from pyfile01 from test as test02
+                    print('test01: ', id(test01))
+                    print('test02: ', id(test02))
+                
+        魔法方法
+            即python内置的方法
+            __str__/__call__/__doc__/__module__/__class__ 等等等....
+            
 
 
 
@@ -647,8 +716,9 @@
 
 
 
-
-
+拾伍.文件操作(015FileOperations)
+    
+    TODO
 
 
 
