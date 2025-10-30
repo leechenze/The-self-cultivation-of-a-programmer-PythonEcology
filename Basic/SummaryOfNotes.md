@@ -718,23 +718,82 @@
 
 拾伍.文件操作(015FileOperations)
     
-    TODO
+    文件对象方法
+        open(path/name,mode)         创建一个file对象,默认是只读模式打开
+            mode
+                | `"r"`  | 只读, 文件必须存在  |
+                | `"w"`  | 写入, 不存在则创建  |
+                | `"a"`  | 追加, 不存在则创建  |
+                | `"x"`  | 创建, 存在则报错 |
+                | `"r+"` | 读写, 文件必须存在  |
+                | `"w+"` | 读写, 清空文件    |
+                | `"a+"` | 读写, 追加      |
+                | `"rb"`  | 二进制只读(bytes), 文件必须存在  |
+                | `"wb"`  | 二进制写入(bytes), 不存在则创建  |
+                | `"ab"`  | 二进制追加(bytes), 不存在则创建  |
 
-
-
-
-
-
-
-
-
-
-
-
-
+        read(n)                 n表示从文件中读取的数据的长度,没有n时默认一次性读取文件的所有内容
+        readline()              一次读取一行内容
+        readlines()             按照行的方式一次读取全部内容
+        write()                 将指定内容写入文件
+        close()                 关闭文件
+        
+    with关键字
+        with open(name)作用就是代码执行完, 系统会自动调用close函数, 省略关闭文件的步骤
+            示例代码如下:
+                with open('text1.txt','w') as file:
+                    file.write('emmmmm......')
+                    print('file.closed = ', file.closed)
+                print('file.closed = ', file.closed)
+        实际上 with 要求右边的对象必须是一个上下文管理器, 而使对象是一个上下文对象, 就必须声明有enter和exit这两个魔法方法.
+            示例代码如下:
+                class Person:
+                    def __enter__(self):
+                        print("进入上下文")
+                        # 可返回任意对象, 通常返回自己
+                        return self
+                    def __exit__(self, exc_type, exc_val, exc_tb):
+                        print("退出上下文")
+                
+                # 实例对象就是上下文管理器
+                obj = Person()
+                
+                with obj as ctx:
+                    print("在 with 块中操作 ctx")
+            示例代码:
+                class Person:
+                    pass
+                obj = Person()
+                那么这个普通对象就不能用with了, 因为不是上下文对象
+    
+    目录操作
+        os.rename(old,new)              目录重命名
+        os.rmdir(dirname)               删除目录
+        os.mkdir(dirname)               创建目录
+        os.getcwd()                     获取当前目录
+        os.listdir(dirname)             获取目录列表
+        os.remove(filename)             删除文件
 
 
         
+
+
+
+
+
+
+拾陆.迭代器和生成器(016IteratorAndGenerators)
+    
+    TODO...
+
+
+
+
+
+
+
+
+
 
 
 
