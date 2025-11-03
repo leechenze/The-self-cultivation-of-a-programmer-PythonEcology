@@ -839,15 +839,22 @@
 
 拾柒.线程进程和协程(017ProcessAndThreadAndCoroutine)
 
-    多线程
-        线程之间执行是无序的
-        线程之间共享资源
-        资源竞争
+    线程
+        线程之间执行是无序的(myprocess_disorder.py)
+        线程之间共享资源(myprocess_share.py)
+        资源竞争(myprocess_compete.py)
+        线程同步(myprocess_sync.py)
+            两种方式
+                join
+                互斥锁
+                    lock = Lock()
+                    lock.acquire()
+                        # 要上锁的代码块, 注意 acquire加锁 和 release解锁 的两个方法一定要成对出现, 否则会出现死锁
+                    lock.release()
     
-    
-
-
-
+    进程
+        
+        TODO...
 
 
 
