@@ -784,7 +784,67 @@
 
 拾陆.迭代器和生成器(016IteratorAndGenerators)
     
-    TODO...
+    可迭代对象(Iterable)
+        可以通过for.in这类语句遍历读取数据的对象
+        str, list, tuple, dict, set
+        条件
+            实现__iter__()魔法方法
+        isinstance()
+            判断一个对象是否是可迭代对象, 或是一个已知的数据类型
+    迭代器(Iterator)
+        迭代器对象一定是可迭代对象, 可迭代对象可以通过 iter() 方法转换成迭代器对象
+        如果一个对象拥有__next__()和__iter__()方法, 是迭代器对象
+        如果一个对象只有__iter__()方法, 则它是一个可迭代对象
+        凡是可以用for循环遍历的都是可迭代对象
+        凡是可以用next()方法遍历的都是迭代器对象
+        迭代器协议
+            对象必须提供一个next方法, 执行该方法要么就返回迭代中的下一项, 要么就引发StopIteration异常
+        自定义迭代器类
+            两个特性
+                __iter__() 和 __next__()
+    生成器(Generator)
+        Python中使用了 yield 的函数被成为生成器(generator)
+        生成器的机制就是一边计算一边循环
+        生成器有两种定义方式
+            生成器表达式
+                类似于列表推导式
+                    列表推导式回顾
+                        for i in range(5):
+                            print(i*5)
+                        列表推导可以这样写
+                            li1 = [i*5 for i in range(5)]
+                            print(li1)
+            生成器函数
+                def gen3(n):
+                    li = []
+                    for i in range(n):
+                        yield i
+                
+                gen03 = gen3(5)
+                print(next(gen03))
+                print(next(gen03))
+                print(next(gen03))
+                print(next(gen03))
+                print(gen03.__next__())
+    可迭代对象/迭代器/生成器三者关系
+        可迭代对象能被 for 遍历, 迭代器是能被逐个取值的对象, 而生成器是一种特殊的迭代器, 用 yield 动态生成数据.
+        包含关系:
+            所有生成器都是迭代器, 所有迭代器都是可迭代对象.
+
+
+
+
+
+
+
+拾柒.线程进程和协程(017ProcessAndThreadAndCoroutine)
+
+    多线程
+        线程之间执行是无序的
+        线程之间共享资源
+        资源竞争
+    
+    
 
 
 
