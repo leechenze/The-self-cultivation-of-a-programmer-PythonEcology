@@ -837,9 +837,34 @@
 
 
 
+
+
+
+
 拾柒.线程进程和协程(017ProcessAndThreadAndCoroutine)
 
     线程
+        线程常用的属性和方法
+            | 属性           | 描述                               |
+            | ------------ | -------------------------------- |
+            | `name`       | 线程的名字，可读写（默认 `Thread-N`）         |
+            | `ident`      | 线程的标识符，整型，当前线程活动时有效，否则为 `None`   |
+            | `daemon`     | 是否为守护线程，`True` 表示主线程结束时守护线程也结束   |
+            | `native_id`  | 操作系统分配的线程 ID（Python 3.8+）        |
+            | `is_alive()` | 返回线程是否仍然存活（布尔值）                  |
+            | `run`        | 线程启动后执行的函数（可覆盖，也可通过 `target` 指定） |
+            | 方法                   | 描述                          |
+            | -------------------- | --------------------------- |
+            | `start()`            | 启动线程，调用 `run()` 方法执行        |
+            | `join(timeout=None)` | 等待线程结束，`timeout` 可设置超时时间    |
+            | `run()`              | 线程实际执行的方法（可自定义）             |
+            | `is_alive()`         | 返回线程是否仍然存活（True/False）      |
+            | `setName(name)`      | 设置线程名字                      |
+            | `getName()`          | 获取线程名字                      |
+            | `setDaemon(flag)`    | 设置守护线程属性（要在 `start()` 前设置） |
+            | `ident`              | 线程标识符（只读）                   |
+            | `native_id`          | 系统线程 ID（Python 3.8+）        |
+
         线程之间执行是无序的(mythread_disorder.py)
         线程之间共享资源(mythread_share.py)
         资源竞争(mythread_compete.py)
@@ -875,8 +900,70 @@
             | `is_alive()`    | 判断进程是否还存活               |
         
         进程之间不共享全局变量(myprocess_not_share.py)
-            
-        
+        进程之间的通讯(myprocess_communication.py)
+            进程之间的通讯主要靠的是队列
+                Queue(队列)
+                    q.put()             放入数据
+                    q.get()             取出数据
+                    q.empty()           判断队列是否为空
+                    q.qsize()           返回当前队列包含的消息数量
+                    q.full()            判断队列是否满了
+    
+    协程
+        介绍(mycoroutine)
+            协程又称为微线程, 纤程, 是python另外实现一种多任务的方式, 比线程更小, 占用更少的执行单元
+        greenlet(mycoroutine_greenlet)
+            greenlet是一个由c语言实现的协程模块, 通过设置switch实现任意函数之间的切换
+            安装greenlet
+                pip install greenlet
+            pip list | grep 'greenlet' 或 pip show greenlet
+        gevent(mycoroutine_gevent)
+            gevent比greenlet强大之处在于gevent是可以自动切换任务, 但实际上 gevent.spawn 就是创建了一个Greenlet对象
+            只不过 gevent 自动帮我们管理了 greenlet 的 switch 方法, 所以说gevent是自动切换任务的.
+            安装gevent
+                pip install gevent
+            说明
+                | 方法                          | 说明           | 示例                          |
+                | --------------------------- | ------------ | --------------------------- |
+                | `gevent.spawn(func, *args)` | 创建（启动）一个协程任务 | `g = gevent.spawn(work, 1)` |
+                | `gevent.join()`             | 等待协程执行完毕     | `g.join()`                  |
+                | `gevent.joinall(list)`      | 等待多个协程结束     | `gevent.joinall([g1, g2])`  |
+                | `gevent.sleep(seconds)`     | 主动交出执行权      | `gevent.sleep(0)`           |
+            猴子补丁(mycoroutine_gevent_monkey)
+                示例
+                    def sing(name):
+                        for i in range(3):
+                            gevent.sleep(1)
+                            # time.sleep(1)
+                            print(f'{name}"s {i} singing')
+                    
+                    
+                    if __name__ == '__main__':
+                        gevent.joinall([
+                            gevent.spawn(sing, 'douglas'),
+                            gevent.spawn(sing, 'anglee'),
+                        ])
+                说明
+                    如上示例代码, 如果换成time.sleep(1) 那就是完全不同的一种效果了, 所以所有的IO操作都要是 gevent 可管理的 I/O
+                    这个时候就要用猴子补丁了 from gevent import monkey; monkey.patch_all()这个了
+                    在 gevent 的操作之前声明这个补丁即可. 这样不光是 time.sleep() 这种操作, 任何网络/文件传输/标准输入输出的IO
+                    都将通过这个补丁被转换为 gevent 管理的IO
+
+
+
+
+
+
+
+
+拾捌.正则表达式(018Regular)
+
+    TODO...
+
+
+
+
+
 
 
 
