@@ -3,6 +3,7 @@
 
 
 
+https://pan.baidu.com/s/1_pDvpaYU_ul_hdR4Qv3R7g&pwd=1234
 
 
 
@@ -216,8 +217,11 @@
     Pandas 是一个 Python 数据分析库，基于 NumPy，底层是 C语言优化的数组操作，用于高效处理结构化数据。
     Pandas 核心：
         数据结构：Series（一维）、DataFrame（二维）
-        数据类型：数值、布尔、字符串、日期时间、分类、混合
+        数据类型：数值(int/float)、布尔(bool)、字符串(object)、日期时间(datetime/timedelta)、分类(category)、混合(object)、空(nan)
+            严格来说 object 是 pandas 最宽泛的 dtype, 代表“这一列存的是 Python 对象”, 并不只是用来表示 字符串 和 混合 类型的
+            混合类型就是当一列出现多种数据类型时, 就会显示 object 被称为混合类型, 但并不是pandas的一个正式类型
         
+            
         
 
 
